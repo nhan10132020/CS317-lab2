@@ -1,2 +1,3 @@
 venv
-mlruns
+mlruns/*
+__pycache__

@@ -4,8 +4,8 @@ import joblib
 import numpy as np
 import uvicorn
 
-MODEL_PATH = "src/model/model_SVM.pkl"  
-SCALER_PATH = "scaler.joblib"
+MODEL_PATH = "src/model/wine_classification.pkl"  
+SCALER_PATH = "src/model/scaler.joblib"
 
 try:
     model = joblib.load(MODEL_PATH)

@@ -72,7 +72,7 @@ def preprocess_data(X, y, test_size=0.3, random_state=42):
     print("Data scaled using StandardScaler (fit on train, transform train/test)")
     print("-" * 20)
     
-    scaler_path = "scaler.joblib"
+    scaler_path = "src/model/scaler.joblib"
     joblib.dump(scaler, scaler_path)
     return X_train_scaled, X_test_scaled, y_train, y_test, scaler_path 
 
@@ -230,6 +230,6 @@ if __name__ == "__main__":
         )
         
     # --- Save Model for API ---
-    api_model_path = f"src/model/model_{model_name}.pkl"
+    api_model_path = f"src/model/wine_classification.pkl"
     joblib.dump(best_model_found, api_model_path)
     print(f"Saved model for {model_name} to: {api_model_path}")
