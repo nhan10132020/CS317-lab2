@@ -1,0 +1,15 @@
+artifact_uri: /Users/cutin17vngmail.com/workspace/uit/cs317/lab1/mlruns/298693813973775813/037d279dd28f4007a32d1e364765963a/artifacts
+end_time: 1744729817245
+entry_point_name: ''
+experiment_id: '298693813973775813'
+lifecycle_stage: active
+run_id: 037d279dd28f4007a32d1e364765963a
+run_name: SVM_GridSearch
+run_uuid: 037d279dd28f4007a32d1e364765963a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744729815775
+status: 3
+tags: []
+user_id: cutin17vngmail.com

@@ -1,0 +1,15 @@
+artifact_uri: /Users/cutin17vngmail.com/workspace/uit/cs317/lab1/mlruns/298693813973775813/e4abd73657b945349c3c52795199e0cc/artifacts
+end_time: 1744729815666
+entry_point_name: ''
+experiment_id: '298693813973775813'
+lifecycle_stage: active
+run_id: e4abd73657b945349c3c52795199e0cc
+run_name: RandomForest_GridSearch
+run_uuid: e4abd73657b945349c3c52795199e0cc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744729814160
+status: 3
+tags: []
+user_id: cutin17vngmail.com
