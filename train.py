@@ -6,8 +6,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier # Thêm Random Forest
-from sklearn.svm import SVC # Thêm SVM
+from sklearn.ensemble import RandomForestClassifier 
+from sklearn.svm import SVC 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 from sklearn.datasets import load_wine
 import mlflow
@@ -41,8 +41,7 @@ def get_git_commit():
 
 # --- Functions (load_data, preprocess_data, evaluate_model) ---
 def load_data():
-    """Tải và chuẩn bị dữ liệu Wine."""
-    print("--- Step 1: Loading Data ---")
+    print("--- Loading Data ---")
     wine = load_wine()
     data = pd.DataFrame(data=np.c_[wine['data'], wine['target']],
                         columns=wine['feature_names'] + ['target'])
@@ -62,8 +61,7 @@ def load_data():
     return X, y, dataset_info
 
 def preprocess_data(X, y, test_size=0.3, random_state=42):
-    """Tiền xử lý dữ liệu: Tách và Scale."""
-    print("--- Step 2: Data Preprocessing ---")
+    print("--- Data Preprocessing ---")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=y)
     print(f"Train set size: {X_train.shape[0]} samples")
     print(f"Test set size: {X_test.shape[0]} samples")
@@ -79,10 +77,8 @@ def preprocess_data(X, y, test_size=0.3, random_state=42):
     return X_train_scaled, X_test_scaled, y_train, y_test, scaler_path 
 
 def train_and_tune_model(model_name, model_instance, param_grid, X_train, y_train, cv=5):
-    """Huấn luyện mô hình cụ thể với Hyperparameter Tuning (GridSearchCV)."""
-    print(f"--- Step 3: Training Model [{model_name}] with GridSearchCV ---")
+    print(f"--- Training and validating Model [{model_name}] with GridSearchCV ---")
 
-    # Sử dụng GridSearchCV để tìm hyperparameters tốt nhất
     grid_search = GridSearchCV(estimator=model_instance, param_grid=param_grid, cv=cv, n_jobs=-1, scoring='accuracy')
     print(f"Performing GridSearchCV for {model_name} with parameters: {param_grid}")
     grid_search.fit(X_train, y_train)
@@ -97,8 +93,7 @@ def train_and_tune_model(model_name, model_instance, param_grid, X_train, y_trai
     return best_model, best_params, best_score
 
 def evaluate_model(model_name, model, X_test, y_test):
-    """Đánh giá mô hình cụ thể trên tập test."""
-    print(f"--- Step 4: Evaluating Model [{model_name}] ---")
+    print(f"--- Evaluating Model [{model_name}] ---")
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='weighted')
@@ -123,11 +118,10 @@ def evaluate_model(model_name, model, X_test, y_test):
     return metrics, report
 
 def log_to_mlflow(model_name, dataset_info, grid_search_params, best_params, cv_score, test_metrics, model, scaler_path, report_str):
-    """Log thông tin của một lần chạy (một thuật toán) vào MLflow."""
     if mlflow.active_run():
         mlflow.end_run()
 
-    print(f"--- Step 5: Logging to MLflow for [{model_name}] ---")
+    print(f"--- Logging to MLflow for [{model_name}] ---")
     
     with mlflow.start_run(run_name=f"{model_name}_GridSearch") as run:
         mlflow.set_tag("git_commit", get_git_commit())
@@ -156,7 +150,7 @@ def log_to_mlflow(model_name, dataset_info, grid_search_params, best_params, cv_
 
         # 4. Log Model (Checkpoint)
         print("Logging model...")
-        mlflow.sklearn.log_model(model, f"model_{model_name}") # Đặt tên artifact model khác nhau
+        mlflow.sklearn.log_model(model, f"model_{model_name}")
 
         # 5. Log Preprocessing Artifact (Scaler)
         print("Logging scaler...")
@@ -174,7 +168,6 @@ def log_to_mlflow(model_name, dataset_info, grid_search_params, best_params, cv_
         print("-" * 20)
         print(f"MLflow logging completed for {model_name}.")
 
-# --- Main Pipeline Execution ---
 if __name__ == "__main__":
     print("===== Starting ML Pipeline - Multi-Algorithm Comparison =====")
 
@@ -185,7 +178,7 @@ if __name__ == "__main__":
     X_train_scaled, X_test_scaled, y_train, y_test, scaler_filepath = preprocess_data(X, y)
 
     # --- Define Models and Hyperparameter Grids ---
-    cv_folds = 5
+    cv_folds = 5 # Number of cross-validation folds
     models_to_run = {
         "LogisticRegression": {
             "model": LogisticRegression(solver='liblinear', random_state=42, max_iter=1000), 
@@ -235,10 +228,8 @@ if __name__ == "__main__":
             scaler_path=scaler_filepath, 
             report_str=report_text
         )
-
-    # --- Cleanup ---
-    if os.path.exists(scaler_filepath):
-        os.remove(scaler_filepath)
-        print(f"\nRemoved temporary scaler file: {scaler_filepath}")
-
-    print("\n===== ML Pipeline Finished =====")
+        
+    # --- Save Model for API ---
+    api_model_path = f"src/model/model_{model_name}.pkl"
+    joblib.dump(best_model_found, api_model_path)
+    print(f"Saved model for {model_name} to: {api_model_path}")
