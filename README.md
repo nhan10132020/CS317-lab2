@@ -3,6 +3,13 @@
 ## Mô tả
 Dự án này xây dựng một API sử dụng FastAPI để phân loại rượu vang dựa trên mô hình học máy đã huấn luyện. Mô hình và scaler đã được train trong lab 1 và lưu dưới dạng file `.pkl` và `.joblib` trong `src/model/`.
 
+## Docker image 
+Docker hub: https://hub.docker.com/r/nhan0612/cs317/tags
+
+## Video demo
+
+
+
 ---
 
 ## Cài đặt môi trường
@@ -13,7 +20,7 @@ git clone <repository-url>
 cd <tên-thư-mục-dự-án>
 ```
 
-### 2. Tạo virtual environment (khuyến nghị)
+### 2. Tạo virtual environment 
 ```sh
 python3 -m venv venv
 source venv/bin/activate  # Trên Windows: venv\Scripts\activate
