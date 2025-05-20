@@ -3,10 +3,17 @@
 ## Mô tả
 Dự án này xây dựng một API sử dụng FastAPI để phân loại rượu vang dựa trên mô hình học máy đã huấn luyện. Mô hình và scaler đã được train trong lab 1 và lưu dưới dạng file `.pkl` và `.joblib` trong `src/model/`.
 
-## Docker image 
+## Pull Docker image from docker hub
 Docker hub: https://hub.docker.com/r/nhan0612/cs317/tags
 
+```sh
+docker pull nhan0612/cs317:latest
+```
+
 ## Video demo
+- Deploy API lên server được cung cấp bằng cách pull docker image đã được build trên Docker hub
+- Chạy container trên server trường
+- Call request trong server trường và call request từ local -> remote server
 
 
 
