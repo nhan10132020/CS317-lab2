@@ -15,13 +15,14 @@ docker pull nhan0612/cs317:latest
 - Chạy container trên server trường
 - Call request trong server trường và call request từ local -> remote server
 
-
+https://github.com/user-attachments/assets/ece3fb1c-398c-4357-bac1-e357eee29bcd
 
 ---
 
 ## Cài đặt môi trường
 
 ### 1. Clone repository
+
 ```sh
 git clone <repository-url>
 cd <tên-thư-mục-dự-án>
